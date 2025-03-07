@@ -7,7 +7,7 @@ export default function Header() {
                         <h1 className="font-bold text-[25px]">Phudon.Ni Than</h1>
                     </div>
                     <div className="flex @max-[470px]:hidden">
-                        <input type="" className="bg-[#0000000d] p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[250px] h-[35px]" />
+                        <input type="" className="bg-[#0000000d] p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" />
                         <div className="bg-[#0000000d] w-[35px] flex items-center justify-center rounded-[0_20px_20px_0]">
                             <i className="fa-solid fa-magnifying-glass"></i>
                         </div>
