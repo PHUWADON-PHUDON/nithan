@@ -1,9 +1,11 @@
 import Header from "@/components/Header";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="m-[0_20px_20px_20px]">
     <Header/>
+    <Link href={"/admin"}>admin</Link>
     <div className="max-w-[1024px] m-[0_auto]">
       <div className="">
         <div className="relative">
