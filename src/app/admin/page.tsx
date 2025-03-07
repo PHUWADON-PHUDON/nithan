@@ -11,7 +11,7 @@ export default function Admin() {
     const login = (inputpassword:string) => {
         if (inputpassword === password && inputpassword !== "") {
             Cookies.set("login","true",{expires:1});
-            router.push("/admin/managenovel");
+            router.push("/admin/managenithan");
         }
     }
 
