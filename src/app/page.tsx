@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="m-[0_20px_20px_20px]">
     <Header/>
-    <Link href={"/admin"}>admin</Link>
+    <Link href={"/admin"}>btnadmin</Link>
     <div className="max-w-[1024px] m-[0_auto]">
       <div className="">
         <div className="relative">
