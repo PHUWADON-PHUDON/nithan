@@ -7,8 +7,9 @@ export function middleware(req:NextRequest) {
     if (login?.value === "true") {
         return NextResponse.next();
     }
-
-    return NextResponse.redirect(new URL("/admin",req.url));
+    else {
+        return NextResponse.redirect(new URL("/admin",req.url));
+    }
 }
 
-export const config = { matcher: '/admin/managenithan' }
+export const config = { matcher: ['/admin/managenithan','/admin/createnithan'] }

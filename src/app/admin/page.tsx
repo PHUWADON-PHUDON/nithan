@@ -26,7 +26,7 @@ export default function Admin() {
     }
 
     return(
-        <div className="border h-[100dvh] flex justify-center items-center flex-col">
+        <div className="h-[100dvh] flex justify-center items-center flex-col">
             <h1 className="text-[50px] font-bold text-center">Phuwadon.Ni Than Login</h1>
             <div className="mt-[20px]">
                 <input onChange={(e) => setinputlogin(e.target.value)} className="border-b focus:outline-none" type="text" placeholder="Password" />

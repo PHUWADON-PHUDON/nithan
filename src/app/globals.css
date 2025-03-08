@@ -3,3 +3,28 @@
 ::-webkit-scrollbar{
     display: none;
 }
+
+.ProseMirror{
+    outline: none;
+}
+
+.ProseMirror img{
+    width: 400px;
+}
+
+.contentview p{
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.contentview img{
+    margin: 20px auto;
+    width: 400px;
+    border-radius: 8px;
+}
+
+.contentview strong{
+    display: block;
+    margin-top: 50px;
+}
