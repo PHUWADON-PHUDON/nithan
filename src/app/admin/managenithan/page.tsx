@@ -1,11 +1,29 @@
-import { PrismaClient } from "@prisma/client";
+"use client";
+import { useState,useEffect } from "react";
 import Link from "next/link";
+import { getAllNithan } from "@/app/serveraction/getnithan";
 import axios from "axios";
 
-const prisma = new PrismaClient();
+export default function Managenovel() {
+    const [data,setdata] = useState<any>([]);
 
-export default async function Managenovel() {
-    const nithan = await prisma.nithan.findMany();
+    useEffect(() => {
+        const abortcontroller = new AbortController();
+
+        const loaddata = async () => {
+            try{
+                const res = await getAllNithan();
+                setdata(res);
+            }
+            catch(err) {
+                console.log(err);
+            }
+        }
+
+        loaddata();
+
+        return () => abortcontroller.abort();
+    },[]);
     
     return(
         <div className="p-[20px]">
@@ -18,7 +36,7 @@ export default async function Managenovel() {
                     </tr>
                 </thead>
                 <tbody>
-                    {nithan.map((e,i:number) => (
+                    {data.map((e:any,i:number) => (
                         <tr key={i}>
                             <td className="text-center p-[20px]"><Link href={`/admin/viewnithan/${e.id}`} className="font-bold text-[#4988f0]">{e.title}</Link></td>
                             <td className="text-center p-[20px]">
