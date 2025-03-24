@@ -12,4 +12,4 @@ export function middleware(req:NextRequest) {
     }
 }
 
-export const config = { matcher: ['/admin/managenithan','/admin/createnithan'] }
+export const config = { matcher: ['/admin/managenithan','/admin/createnithan','/admin/viewnithan/:path*','/admin/editnithan/:path*'] }

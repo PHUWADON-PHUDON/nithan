@@ -4,7 +4,7 @@ export default function Header() {
             <div className="max-w-[1024px] h-[80px] m-[0_auto]">
                 <div className="h-[100%] flex items-center justify-between">
                     <div>
-                        <h1 className="font-bold text-[25px]">Phudon.Ni Than</h1>
+                        <h1 className="font-bold text-[25px]">Nithan</h1>
                     </div>
                     <div className="flex @max-[470px]:hidden">
                         <input type="" className="bg-[#0000000d] p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" />
