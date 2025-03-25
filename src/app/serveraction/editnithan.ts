@@ -31,6 +31,7 @@ export async function editNithan(id:number,finddelete:ImageType[],images:File[],
     try{
         let uploadpromise:UploadPromiseType[] = [];
 
+        //generate file name
         const generateUniqueFileName = () => {
             const now:Date = new Date();
             const dateStr:string = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(
@@ -42,6 +43,7 @@ export async function editNithan(id:number,finddelete:ImageType[],images:File[],
             return `${dateStr}-${randomStr}`;
         }
 
+        //delete images file and delete image name in database 
         if (finddelete.length > 0) {
             await Promise.all(finddelete.map( async (e:ImageType) => {
                 const findimage:ImageType = await prisma.image.findUnique({where:{id:Number(e.id)}}) as ImageType;
@@ -54,6 +56,7 @@ export async function editNithan(id:number,finddelete:ImageType[],images:File[],
             }));
         }
 
+        //compress images file and create images file in supabase
         if (images.length > 0) {
             uploadpromise = await Promise.all(images.map( async (file:File,i:number) => {
                 const buffer = Buffer.from(await file.arrayBuffer());
@@ -73,6 +76,7 @@ export async function editNithan(id:number,finddelete:ImageType[],images:File[],
             });
         }
 
+        //update title,content on nithan table
         const createpost = await prisma.nithan.update({
             where:{id:Number(id)},
             data:{
@@ -81,6 +85,7 @@ export async function editNithan(id:number,finddelete:ImageType[],images:File[],
             }
         });
 
+        //create images name on image table
         if (uploadpromise.length > 0) {
             await Promise.all(uploadpromise.map( async (e:UploadPromiseType) => {
               await prisma.image.create({data:{

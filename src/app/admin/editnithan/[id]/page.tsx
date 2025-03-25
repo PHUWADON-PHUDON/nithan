@@ -42,10 +42,16 @@ export default function editnithan() {
     useEffect(() => {
         const loaddata = async () => {
             try{
-                const res:NiThanType | null = await getNithan(Number(params.id)) as NiThanType | null;
-                setinputtitle(res!.title);
-                setcontent(res!.content);
-                setfindimagesdelete(res!.images);
+                const res:{nithan:NiThanType,status:number} | null = await getNithan(Number(params.id)) as {nithan:NiThanType,status:number} | null;
+                if (res!.status === 200) {
+                    setinputtitle(res!.nithan.title);
+                    setcontent(res!.nithan.content);
+                    setfindimagesdelete(res!.nithan.images);
+                }
+                else {
+                    alert("เกิดข้อผิดพลาด");
+                    window.location.reload();
+                }
             }
             catch(err) {
                 console.log(err);
