@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden h-[100dvh] p-[0_20px] relative @container`}
       >
-        <NextTopLoader />
+        <NextTopLoader showSpinner={false}/>
         {children}
       </body>
     </html>
