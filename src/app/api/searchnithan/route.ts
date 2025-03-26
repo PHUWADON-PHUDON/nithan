@@ -28,8 +28,6 @@ export async function POST(req:NextRequest) {
       const body = await req.json();
       const { value } = body;
 
-      console.log(value);
-
       const nithan:NiThanType[] | null = await prisma.nithan.findMany({
           where:{
               title:{

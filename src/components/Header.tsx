@@ -30,14 +30,19 @@ export default function Header() {
         const abortcontroller = new AbortController();
 
         const searchNow = async () => {
-            if (inputsearch !== "") {
-                const res = await axios.post("/api/searchnithan",{value:inputsearch,signal:abortcontroller.signal});
-                if (res.status === 200) {
-                    setlistsearch(res.data);
-                }
+            if (inputsearch === "") {
+                setlistsearch([]);
             }
             else {
-                setlistsearch([]);
+                try{
+                    const res = await axios.post("/api/searchnithan",{value:inputsearch},{signal:abortcontroller.signal});
+                    if (res.status === 200) {
+                        setlistsearch(res.data);
+                    }
+                }
+                catch(err) {
+                    console.log(err);
+                }
             }
         }
 
