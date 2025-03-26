@@ -1,6 +1,7 @@
 "use client";
 import { useState,useEffect } from "react";
 import { searchNithan } from "@/app/serveraction/getnithan";
+import axios from "axios";
 
 interface ImageType {
     id:number;
@@ -24,30 +25,30 @@ export default function Header() {
     const [listsearch,setlistsearch] = useState<NiThanType[]>([]);
 
     //!search nithan
-    
-    // const search = async (value:string) => {
-    //     setinputsearch(value);
-    // }
 
     useEffect(() => {
-        const searchNow = async () => {
-            const res:{status:number,nithan:NiThanType[]} = await searchNithan(inputsearch) as {status:number,nithan:NiThanType[]};
-            if (res.status === 200) {
-                setlistsearch(res?.nithan);
-            }
+        const abortcontroller = new AbortController();
 
-            if (inputsearch === "") {
+        const searchNow = async () => {
+            if (inputsearch !== "") {
+                const res = await axios.post("/api/searchnithan",{value:inputsearch,signal:abortcontroller.signal});
+                if (res.status === 200) {
+                    setlistsearch(res.data);
+                }
+            }
+            else {
                 setlistsearch([]);
-                return;
             }
         }
 
         searchNow();
+
+        return () => abortcontroller.abort();
     },[inputsearch]);
 
     //!
 
-    console.log(listsearch);
+    //console.log(listsearch);
     
     return(
         <div className="w-[100%] sticky top-0 z-10 bg-white @container">
