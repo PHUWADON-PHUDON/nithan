@@ -11,7 +11,7 @@ export async function getAllNithan() {
         return({status:200,nithan:nithan});
     }
     catch {
-        return({status:500,nithan:[]});
+        return({status:500});
     }
 }
 
@@ -23,6 +23,17 @@ export async function getNithan(id:number) {
         return({status:200,nithan:nithan});
     }
     catch {
-        return({status:500,nithan:[]});
+        return({status:500});
+    }
+}
+
+export async function getNithanHome() {
+    try{
+        const nithan = await prisma.nithan.findMany({orderBy:{id:"desc"},take:4});
+
+        return({status:200,nithan:nithan});
+    }
+    catch(err) {
+        return({status:500});
     }
 }

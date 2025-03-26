@@ -19,8 +19,9 @@ model nithan {
   title String
   content String?
   favorite Int?
-  images image[]
   createAt DateTime @default(now())
+  images image[]
+  favorites favorite[]
 }
 
 model image {
@@ -29,4 +30,20 @@ model image {
   imagename String?
   nithan nithan @relation(fields: [nithanid], references: [id])
   createAt DateTime @default(now())
+}
+
+model user {
+  id Int @id @default(autoincrement())
+  gmail String
+  password String
+  favorites favorite[]
+}
+
+model favorite {
+  id Int @id @default(autoincrement())
+  fav Int
+  userid Int
+  user user @relation(fields: [userid], references: [id])
+  nithanid Int
+  nithan nithan @relation(fields: [nithanid], references: [id])
 }
