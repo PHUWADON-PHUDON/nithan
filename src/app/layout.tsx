@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import NextTopLoader from 'nextjs-toploader';
 
@@ -32,7 +33,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden h-[100dvh] p-[0_20px] relative @container`}
       >
         <NextTopLoader showSpinner={false}/>
-        {children}
+        <Suspense>
+          {children}
+        </Suspense>
       </body>
     </html>
   );

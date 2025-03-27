@@ -1,6 +1,7 @@
 "use client";
 import { useState,useEffect } from "react";
 import { useSearchParams,useRouter } from "next/navigation";
+import { Suspense } from "react";
 import Header from "@/components/Header";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
