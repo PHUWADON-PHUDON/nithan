@@ -51,9 +51,9 @@ export default function Home() {
                 :
                 <img className="h-[70dvh] w-[100%] object-cover rounded-4xl brightness-80" src="https://plus.unsplash.com/premium_photo-1687996107376-20005edd18fd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" loading="lazy"/>
               }
-              <div className="absolute left-[100px] bottom-[100px] @max-[755px]:left-[50%] @max-[755px]:translate-x-[-50%] @max-[755px]:text-center">
-                <h1 className="text-white text-[50px] font-bold">{content[0]?.title}</h1>
-                <Link href={`/viewnithan?id=${content[0]?.id}`} className="bg-[#ff4550] text-white p-[5px_50px] font-bold rounded-4xl mt-[20px] cursor-pointer">Read</Link>
+              <div className="absolute left-[50%] bottom-[100px] translate-x-[-50%] w-[100%] p-[0_20px]">
+                <h1 className="text-white text-[50px] mb-[10px] font-bold text-center  @max-[450px]:text-[40px] @max-[350px]:text-[30px]">{content[0]?.title}</h1>
+                <Link href={`/viewnithan?id=${content[0]?.id}`} className="bg-[#ff4550] text-white p-[5px_50px] font-bold rounded-4xl mt-[20px] cursor-pointer block w-[137px] m-[0_auto]">Read</Link>
               </div>
             </div>
             <div className="mt-[20px] flex gap-[20px] flex-wrap justify-center">
