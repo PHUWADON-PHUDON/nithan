@@ -53,13 +53,13 @@ export default function Home() {
               }
               <div className="absolute left-[100px] bottom-[100px] @max-[755px]:left-[50%] @max-[755px]:translate-x-[-50%] @max-[755px]:text-center">
                 <h1 className="text-white text-[50px] font-bold">{content[0]?.title}</h1>
-                <button className="bg-[#ff4550] text-white p-[5px_50px] font-bold rounded-4xl mt-[20px]">Read</button>
+                <Link href={`/viewnithan?id=${content[0]?.id}`} className="bg-[#ff4550] text-white p-[5px_50px] font-bold rounded-4xl mt-[20px] cursor-pointer">Read</Link>
               </div>
             </div>
             <div className="mt-[20px] flex gap-[20px] flex-wrap justify-center">
               {content.map((e:NiThanType,i:number) => (
                 (i > 0 ? 
-                  <Link key={i} href={""}>
+                  <Link key={i} href={`/viewnithan?id=${e.id}`} className="boxitem">
                     <div className="h-[180px] overflow-hidden rounded-2xl w-[250px] relative @max-[575px]:w-[350px] @max-[350px]:w-[250px]">
                       {e.images.length > 0 ? 
                         <img src={e.images[0].imageurl} alt="" className="object-cover h-[100%] w-[100%]" loading="lazy"/>

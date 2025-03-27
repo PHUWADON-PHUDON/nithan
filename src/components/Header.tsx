@@ -61,6 +61,7 @@ export default function Header() {
     const clickSearch = () => {
         if (inputsearch !== "") {
             router.push(`/search?search=${inputsearch}&page=1`);
+            setinputsearch("");
         }
     } 
     
@@ -71,20 +72,20 @@ export default function Header() {
             <div className="max-w-[1024px] h-[80px] m-[0_auto]">
                 <div className="h-[100%] flex items-center justify-between">
                     <div>
-                        <h1 className="font-bold text-[25px]">Nithan</h1>
+                        <h1 onClick={() => router.push("/")} className="font-bold text-[25px] cursor-pointer">Nithan</h1>
                     </div>
                     <div className="flex @max-[470px]:hidden">
-                        <input type="" onChange={(e) => setinputsearch(e.target.value)} className="bg-[#0000000d] p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" />
+                        <input type="" onChange={(e) => setinputsearch(e.target.value)} className="bg-[#0000000d] p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" placeholder="Search..."/>
                         <div className="bg-[#0000000d] w-[35px] flex items-center justify-center rounded-[0_20px_20px_0]">
-                            <i onClick={() => clickSearch()} className="fa-solid fa-magnifying-glass"></i>
+                            <i onClick={() => clickSearch()} className="fa-solid fa-magnifying-glass cursor-pointer"></i>
                         </div>
                     </div>
                 </div>
             </div>
             {listsearch.length > 0 ? 
-                <div className="absolute right-0 w-[235px] bg-[#f2f2f2] p-[10px] rounded-[10px]">
+                <div className="absolute right-0 w-[235px] bg-[#f2f2f2] p-[10px] rounded-[10px] max-h-[300px] overflow-y-scroll">
                     {listsearch.map((e,i) => (
-                        <Link key={i} href={`/search?search=${e.title}&page=1`} className="block">{e.title}</Link>
+                        <Link key={i} href={`/search?search=${e.title}&page=1`} onClick={() =>  setinputsearch("")} className="block">{e.title}</Link>
                     ))}
                 </div>
                 :

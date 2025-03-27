@@ -32,7 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden h-[100dvh] p-[0_20px] relative @container`}
       >
-        <NextTopLoader showSpinner={false}/>
+        <NextTopLoader showSpinner={false} color="#ff4550"/>
         <Suspense>
           {children}
         </Suspense>

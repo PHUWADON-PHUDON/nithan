@@ -43,3 +43,8 @@
 .pagination .active > a{
     color: #ff4550 !important;
 }
+
+.boxitem:hover div{
+    color: #ff4550 !important;
+    font-weight: bold;
+}
