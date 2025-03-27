@@ -14,14 +14,14 @@ export default function Admin() {
 
         if (login === "true") {
             setislogin(true);
-            router.push("/admin/managenithan");
+            router.push("/admin/managenithan?page=1");
         }
     },[]);
     
     const login = (inputpassword:string) => {
         if (inputpassword === password && inputpassword !== "") {
             Cookies.set("login","true",{expires:1});
-            router.push("/admin/managenithan");
+            router.push("/admin/managenithan?page=1");
         }
     }
 

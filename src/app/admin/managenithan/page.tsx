@@ -2,8 +2,10 @@
 import { useState,useEffect } from "react";
 import { getAllNithan } from "@/app/serveraction/getnithan";
 import { deleteNithan } from "@/app/serveraction/deletenithan";
+import { useRouter,useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { error } from "console";
+import ReactPaginate from "react-paginate";
+import axios from "axios";
 
 interface NiThanType {
     id:number;
@@ -16,30 +18,34 @@ interface NiThanType {
 export default function Managenovel() {
     const [data,setdata] = useState<NiThanType[]>([]);
     const [iswait,setiswait] = useState<boolean>(true);
+    const [countnithan,setcountnithan] = useState<number>(1);
+    const router = useRouter();
+    const searchparam = useSearchParams();
 
     //!load data
 
     const loaddata = async () => {
+        const abortcontroller = new AbortController();
+
         try{
             setiswait(true);
-            const res:{nithan:NiThanType[],status:number} | null = await getAllNithan() as {nithan:NiThanType[],status:number} | null;
-            if (res!.status === 200) {
-                setdata(res!.nithan);
+            const res = await axios.get(`/api/getnithan?page=${searchparam.get("page")}`,{signal:abortcontroller.signal});
+            if (res.status === 200) {
+                setdata(res.data.nithan);
+                setcountnithan(res.data.countnithan);
                 setiswait(false);
-            }
-            else {
-                alert("เกิดข้อผิดพลาด");
-                window.location.reload();
             }
         }
         catch(err) {
             console.log(err);
         }
+
+        return () => abortcontroller.abort();
     }
 
     useEffect(() => {
         loaddata();
-    },[]);
+    },[searchparam]);
 
     //!
 
@@ -62,6 +68,14 @@ export default function Managenovel() {
         catch(err) {
             console.log(err);
         }
+    }
+
+    //!
+
+    //!change page
+
+    const changePage = (event:any) => {
+        router.push(`/admin/managenithan?page=${event.selected + 1}`);
     }
 
     //!
@@ -92,7 +106,21 @@ export default function Managenovel() {
                             ))}
                         </tbody>
                     </table>
-                    <Link href={"/admin/createnithan"} className="bg-[#4e8cf1] text-[#fff] inline-block p-[10px_1.5rem] font-bold rounded-[8px] mt-[50px]">Create Nithan</Link>
+                    <div className="flex justify-center mt-[30px]">
+                        <ReactPaginate
+                            previousLabel={false}
+                            nextLabel={false}
+                            breakLabel={'...'}
+                            pageCount={Math.ceil(countnithan / 5)}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={changePage}
+                            containerClassName={'pagination'}
+                            activeClassName={'active'}
+                            forcePage={Number(searchparam.get("page")) - 1}
+                        />
+                    </div>
+                    <Link href={"/admin/createnithan"} className="bg-[#4e8cf1] text-[#fff] inline-block p-[10px_1.5rem] font-bold rounded-[8px] mt-[30px]">Create Nithan</Link>
                 </>
             }
         </div>

@@ -47,9 +47,9 @@ export default function Home() {
           <div className="">
             <div className="relative">
               {content[0]?.images.length > 0 ? 
-                <img src={content[0]?.images[0].imageurl} alt="" className="h-[70dvh] w-[100%] object-cover rounded-4xl brightness-80" />
+                <img src={content[0]?.images[0].imageurl} alt="" className="h-[70dvh] w-[100%] object-cover rounded-4xl brightness-80" loading="lazy"/>
                 :
-                <img className="h-[70dvh] w-[100%] object-cover rounded-4xl brightness-80" src="https://plus.unsplash.com/premium_photo-1687996107376-20005edd18fd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+                <img className="h-[70dvh] w-[100%] object-cover rounded-4xl brightness-80" src="https://plus.unsplash.com/premium_photo-1687996107376-20005edd18fd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" loading="lazy"/>
               }
               <div className="absolute left-[100px] bottom-[100px] @max-[755px]:left-[50%] @max-[755px]:translate-x-[-50%] @max-[755px]:text-center">
                 <h1 className="text-white text-[50px] font-bold">{content[0]?.title}</h1>
@@ -62,9 +62,9 @@ export default function Home() {
                   <Link key={i} href={""}>
                     <div className="h-[180px] overflow-hidden rounded-2xl w-[250px] relative @max-[575px]:w-[350px] @max-[350px]:w-[250px]">
                       {e.images.length > 0 ? 
-                        <img src={e.images[0].imageurl} alt="" className="object-cover h-[100%] w-[100%]" />
+                        <img src={e.images[0].imageurl} alt="" className="object-cover h-[100%] w-[100%]" loading="lazy"/>
                         :
-                        <img className="object-cover h-[100%] w-[100%]" src="https://plus.unsplash.com/premium_photo-1687996107376-20005edd18fd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+                        <img className="object-cover h-[100%] w-[100%]" src="https://plus.unsplash.com/premium_photo-1687996107376-20005edd18fd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" loading="lazy"/>
                       }
                       <div className="absolute z-20 left-[0] bottom-[0] w-[100%] h-[50px] bg-linear-[180deg,transparent,#000_95%] text-white flex items-center p-[0_10px]">{e.title}</div>
                     </div>

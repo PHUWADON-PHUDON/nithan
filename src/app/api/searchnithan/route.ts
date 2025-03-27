@@ -24,33 +24,77 @@ interface NiThanType {
 }
 
 export async function POST(req:NextRequest) {
-    try{
-      const body = await req.json();
-      const { value } = body;
+  try{
+    const body = await req.json();
+    const { value } = body;
 
-      const nithan:NiThanType[] | null = await prisma.nithan.findMany({
-          where:{
-              title:{
-                  contains:value,
-                  mode:"insensitive"
-              }
-          },
-          include:{images:true}
-      }) as NiThanType[] | null;
+    const nithan:NiThanType[] | null = await prisma.nithan.findMany({
+        where:{
+            title:{
+                contains:value,
+                mode:"insensitive"
+            }
+        },
+        include:{images:true}
+    }) as NiThanType[] | null;
 
-      if (nithan) {
-          Promise.all(nithan.map((e,i) => {
-              if (e.images.length > 0) {
-                  const { data } = supabase.storage.from("nithanimages").getPublicUrl(e.images[0].imagename + "");
-                  const imageurl:string = data.publicUrl;
-                  nithan[i].images[0].imageurl = imageurl;
-              }
-          }));
-      }
-
-      return(NextResponse.json(nithan));
+    if (nithan) {
+        Promise.all(nithan.map((e,i) => {
+            if (e.images.length > 0) {
+                const { data } = supabase.storage.from("nithanimages").getPublicUrl(e.images[0].imagename + "");
+                const imageurl:string = data.publicUrl;
+                nithan[i].images[0].imageurl = imageurl;
+            }
+        }));
     }
-    catch(err) {
-      return(NextResponse.json({err:err},{status:500}));
+
+    return(NextResponse.json(nithan));
+  }
+  catch(err) {
+    return(NextResponse.json({err:err},{status:500}));
+  }
+}
+
+export async function GET(req:NextRequest) {
+  try{
+    const searchparam = req.nextUrl.searchParams;
+    const search = searchparam.get("search") || "";
+    const page = searchparam.get("page") || 1;
+
+    const countnithan:number | null = await prisma.nithan.count({
+        where:{
+            title:{
+                contains:search,
+                mode:"insensitive"
+            }
+        }
+    }) as number | null;
+
+    const nithan:NiThanType[] | null = await prisma.nithan.findMany({
+      where:{
+          title:{
+              contains:search,
+              mode:"insensitive"
+          }
+      },
+      include:{images:true},
+      take:12,
+      skip:Number(page) * 12 - 12
+    }) as NiThanType[] | null;
+
+    if (nithan) {
+      Promise.all(nithan.map((e,i) => {
+        if (e.images.length > 0) {
+          const { data } = supabase.storage.from("nithanimages").getPublicUrl(e.images[0].imagename + "");
+          const imageurl:string = data.publicUrl;
+          nithan[i].images[0].imageurl = imageurl;
+        }
+      }));
     }
+
+    return(NextResponse.json({nithan:nithan,countnithan:countnithan}));
+  }
+  catch(err) {
+    return(NextResponse.json({err:err},{status:500}));
+  }
 }

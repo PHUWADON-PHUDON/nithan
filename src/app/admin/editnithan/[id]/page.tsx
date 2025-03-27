@@ -85,11 +85,11 @@ export default function editnithan() {
             setwaitedit(true);
             const res = await editNithan(Number(params.id),newfindimagesdelete,images,blobs,inputtitle,content);
             if (res.status === 200) {
-                router.push("/admin/managenithan");
+                router.back();
             }
             else {
                 alert("เกิดข้อผิดพลาดระหว่างแก้ไข");
-                router.push("/admin/managenithan");
+                router.back();
             }
         }
         catch(err) {

@@ -42,7 +42,7 @@ export default function Createnithan() {
                 setwaitcreate(true);
                 const response = await axios.post("/api/createnithan",formdata,{headers:{'content-type':'multipart/form-data'},signal:abortcontroller.signal});
                 if (response.status === 200) {
-                    router.push("/admin/managenithan");
+                    router.push("/admin/managenithan?page=1");
                 }
             }
             catch(err) {
