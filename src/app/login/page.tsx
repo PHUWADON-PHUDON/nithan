@@ -14,7 +14,7 @@ export default function Login() {
             if (inputgmail !== "" && inputpassword !== "") {
                 const res = await axios.post("/api/auth/signin",{gmail:inputgmail,password:inputpassword});
                 if (res.status === 200) {
-                    console.log(res.data);
+                    router.back();
                 }
             }
         }

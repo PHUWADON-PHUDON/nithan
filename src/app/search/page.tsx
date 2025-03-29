@@ -44,8 +44,6 @@ export default function Search() {
                     setcountnithan(res.data.countnithan)
                     setcontent(res.data.nithan);
                     setwait(false);
-
-                    console.log(res.data.countnithan);
                 }
             }
             catch(err) {

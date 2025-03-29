@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import NextTopLoader from 'nextjs-toploader';
-import Authpoverder from '../components/Authpovider';
 import Header from "@/components/Header";
 
 const geistSans = Geist({
@@ -26,6 +25,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
 
   return (
     <html lang="en">

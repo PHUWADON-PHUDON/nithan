@@ -32,22 +32,17 @@ export default function Header() {
     const [inputsearch,setinputsearch] = useState<string>("");
     const [listsearch,setlistsearch] = useState<NiThanType[]>([]);
     const [verify,setverify] = useState<VerifyType>();
-    const [hideheader,sethideheader] = useState<boolean>(false);
     const router = useRouter();
     const pathname = usePathname();
+    const hideurl = ["/login","/admin","/admin/managenithan","/admin/viewnithan","/admin/editnithan","/admin/createnithan"];
 
-    useEffect(() => {
-        if (pathname === "/login" || pathname === "/admin" || 
-            pathname === "/admin/managenithan" || pathname.includes("/admin/viewnithan") ||
-            pathname.includes("/admin/editnithan") || pathname === "/admin/createnithan") {
+    //!hide header
 
-            sethideheader(true);
-        }
-        else {
-            sethideheader(false);
-        }
-        console.log(pathname)
-    },[pathname]);
+    if (hideurl.includes(pathname)) {
+        return null;
+    }
+
+    //!
 
     //!verify
 
@@ -57,7 +52,6 @@ export default function Header() {
               const res = await axios.get("/api/verifytoken");
               if (res.status === 200) {
                 setverify(res.data);
-                console.log(res.data);
               }
             }
             catch(err) {
@@ -111,43 +105,39 @@ export default function Header() {
     //!
     
     return(
-        (!hideheader ? 
-            <div className="w-[100%] sticky top-0 z-10 bg-white @container">
-                <div className="max-w-[1024px] h-[80px] m-[0_auto] relative">
-                    <div className="h-[100%] flex items-center justify-between">
-                        <div>
-                            <h1 onClick={() => router.push("/")} className="font-bold text-[25px] cursor-pointer">Nithan</h1>
-                        </div>
-                        <div className="flex @max-[470px]:hidden">
-                            <input type="" onChange={(e) => setinputsearch(e.target.value)} className="bg-[#0000000d] p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" placeholder="Search..."/>
-                            <div className="bg-[#0000000d] w-[35px] flex items-center justify-center rounded-[0_20px_20px_0]">
-                                <i onClick={() => clickSearch()} className="fa-solid fa-magnifying-glass cursor-pointer"></i>
-                            </div>
-                            {verify?.token ? 
-                                <div className="flex items-center h-[35px] p-[0_10px] ml-[20px] text-[16px]">
-                                    <p>Hello <span className="text-[#ff4550]">{verify?.name}</span></p>
-                                </div>
-                                :
-                                <Link href={"/login"} className="flex items-center gap-[10px] bg-[#ff4550] text-white h-[35px] rounded-[20px] p-[0_10px] ml-[20px] text-[16px] cursor-pointer">
-                                    <i className="fa-solid fa-arrow-right-to-bracket"></i>
-                                    <p>Sign In</p>
-                                </Link>
-                            }
-                        </div>
+        <div className="w-[100%] sticky top-0 z-10 bg-white @container">
+            <div className="max-w-[1024px] h-[80px] m-[0_auto] relative">
+                <div className="h-[100%] flex items-center justify-between">
+                    <div>
+                        <h1 onClick={() => router.push("/")} className="font-bold text-[25px] cursor-pointer">Nithan</h1>
                     </div>
-                    {listsearch.length > 0 ? 
-                        <div className="absolute right-0 w-[235px] bg-[#f2f2f2] p-[10px] rounded-[10px] max-h-[300px] overflow-y-scroll">
-                            {listsearch.map((e,i) => (
-                                <Link key={i} href={`/search?search=${e.title}&page=1`} onClick={() =>  setinputsearch("")} className="block">{e.title}</Link>
-                            ))}
+                    <div className="flex @max-[470px]:hidden">
+                        <input type="" onChange={(e) => setinputsearch(e.target.value)} className="bg-[#0000000d] p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" placeholder="Search..."/>
+                        <div className="bg-[#0000000d] w-[35px] flex items-center justify-center rounded-[0_20px_20px_0]">
+                            <i onClick={() => clickSearch()} className="fa-solid fa-magnifying-glass cursor-pointer"></i>
                         </div>
-                        :
-                        <p></p>
-                    }
+                        {verify?.token ? 
+                            <div className="flex items-center h-[35px] p-[0_10px] ml-[20px] text-[16px]">
+                                <p>Hello <span className="text-[#ff4550]">{verify?.name}</span></p>
+                            </div>
+                            :
+                            <Link href={"/login"} className="flex items-center gap-[10px] bg-[#ff4550] text-white h-[35px] rounded-[20px] p-[0_10px] ml-[20px] text-[16px] cursor-pointer">
+                                <i className="fa-solid fa-arrow-right-to-bracket"></i>
+                                <p>Sign In</p>
+                            </Link>
+                        }
+                    </div>
                 </div>
-             </div>
-            :
-            ""
-        )
+                {listsearch.length > 0 ? 
+                    <div className="absolute right-0 w-[235px] bg-[#f2f2f2] p-[10px] rounded-[10px] max-h-[300px] overflow-y-scroll">
+                        {listsearch.map((e,i) => (
+                            <Link key={i} href={`/search?search=${e.title}&page=1`} onClick={() =>  setinputsearch("")} className="block">{e.title}</Link>
+                        ))}
+                    </div>
+                    :
+                    <p></p>
+                }
+            </div>
+         </div>
     );
 }
