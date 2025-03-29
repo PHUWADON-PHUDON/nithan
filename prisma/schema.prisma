@@ -34,7 +34,8 @@ model image {
 
 model user {
   id Int @id @default(autoincrement())
-  gmail String
+  name String
+  gmail String @unique
   password String
   favorites favorite[]
 }
