@@ -32,30 +32,25 @@ export default function Header() {
     const [inputsearch,setinputsearch] = useState<string>("");
     const [listsearch,setlistsearch] = useState<NiThanType[]>([]);
     const [verify,setverify] = useState<VerifyType>();
+    const [waitautosignin,setwaitautosignin] = useState<boolean>(true);
     const router = useRouter();
     const pathname = usePathname();
     const hideurl = ["/login","/admin","/admin/managenithan","/admin/viewnithan","/admin/editnithan","/admin/createnithan"];
-
-    //!hide header
-
-    if (hideurl.includes(pathname)) {
-        return null;
-    }
-
-    //!
 
     //!verify
 
     useEffect(() => {
         const autosignin = async () => {
             try{
-              const res = await axios.get("/api/verifytoken");
-              if (res.status === 200) {
-                setverify(res.data);
-              }
+                setwaitautosignin(true);
+                const res = await axios.get("/api/verifytoken");
+                if (res.status === 200) {
+                  setverify(res.data);
+                  setwaitautosignin(false);
+                }
             }
             catch(err) {
-              console.log(err);
+                console.log(err);
             }
         }
 
@@ -103,6 +98,16 @@ export default function Header() {
     } 
     
     //!
+
+    //!hide header
+
+    const hideHeader = hideurl.some(route => pathname.startsWith(route));
+
+    if (hideHeader) {
+        return null;
+    }
+
+    //!
     
     return(
         <div className="w-[100%] sticky top-0 z-10 bg-white @container">
@@ -121,9 +126,15 @@ export default function Header() {
                                 <p>Hello <span className="text-[#ff4550]">{verify?.name}</span></p>
                             </div>
                             :
-                            <Link href={"/login"} className="flex items-center gap-[10px] bg-[#ff4550] text-white h-[35px] rounded-[20px] p-[0_10px] ml-[20px] text-[16px] cursor-pointer">
-                                <i className="fa-solid fa-arrow-right-to-bracket"></i>
-                                <p>Sign In</p>
+                            <Link href={"/login"} className="w-[100px] flex items-center justify-center gap-[10px] bg-[#ff4550] text-white h-[35px] rounded-[20px] p-[0_10px] ml-[20px] text-[16px] cursor-pointer">
+                                {waitautosignin ? 
+                                    <p className="aniwaitautosignin w-[20px] h-[20px] border-[3px] border-white rounded-[100%] border-r-transparent"></p>
+                                    :
+                                    <>
+                                    <i className="fa-solid fa-arrow-right-to-bracket"></i>
+                                    <p>Sign In</p>
+                                    </>
+                                }
                             </Link>
                         }
                     </div>

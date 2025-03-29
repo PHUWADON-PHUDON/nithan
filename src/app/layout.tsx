@@ -37,7 +37,7 @@ export default async function RootLayout({
       >
         <NextTopLoader showSpinner={false} color="#ff4550"/>
         <Suspense>
-          <Header/>
+          {/* <Header/> */}
           {children}
         </Suspense>
       </body>

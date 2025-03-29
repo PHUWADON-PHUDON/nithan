@@ -48,3 +48,19 @@
     color: #ff4550 !important;
     font-weight: bold;
 }
+
+.aniwaitautosignin{
+    animation: aniwaitautosignin .8s linear infinite;
+}
+
+@keyframes aniwaitautosignin {
+    0%{
+        transform: rotate(0);
+    }
+    50%{
+        transform: rotate(190deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
