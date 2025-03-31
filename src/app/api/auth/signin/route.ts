@@ -22,8 +22,6 @@ export async function POST(req:NextRequest) {
 
                 const response = NextResponse.json({ message: 'Logged in' }, { status: 200 });
                 response.cookies.set('token', token, {
-                    httpOnly: true,
-                    secure: process.env.MODE_ENV === 'production',
                     path: '/',
                     maxAge: 24 * 60 * 60
                 });

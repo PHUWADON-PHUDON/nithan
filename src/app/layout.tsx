@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import NextTopLoader from 'nextjs-toploader';
 import Header from "@/components/Header";
+import Userpovider from "@/components/Userpovider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,8 +38,10 @@ export default async function RootLayout({
       >
         <NextTopLoader showSpinner={false} color="#ff4550"/>
         <Suspense>
-          {/* <Header/> */}
-          {children}
+          <Userpovider>
+            <Header/>
+            {children}
+          </Userpovider>
         </Suspense>
       </body>
     </html>

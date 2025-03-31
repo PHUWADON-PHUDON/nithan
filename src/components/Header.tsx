@@ -1,10 +1,10 @@
 "use client";
-import { useState,useEffect } from "react";
-import { searchNithan } from "@/app/serveraction/getnithan";
+import { useState,useEffect,useContext } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
+import { userpovider } from "./Userpovider";
 
 interface ImageType {
     id:number;
@@ -35,7 +35,8 @@ export default function Header() {
     const [waitautosignin,setwaitautosignin] = useState<boolean>(true);
     const router = useRouter();
     const pathname = usePathname();
-    const hideurl = ["/login","/admin","/admin/managenithan","/admin/viewnithan","/admin/editnithan","/admin/createnithan"];
+    const userpovider_ = useContext(userpovider);
+    const hideurl = ["/signin","/signup","/admin","/admin/managenithan","/admin/viewnithan","/admin/editnithan","/admin/createnithan"];
 
     //!verify
 
@@ -55,36 +56,37 @@ export default function Header() {
         }
 
         autosignin();
-    },[]);
+    },[userpovider_.checksignin]);
 
     //!
 
     //!search nithan
 
-    useEffect(() => {
-        const abortcontroller = new AbortController();
+    //?wait update
+    // useEffect(() => {
+    //     const abortcontroller = new AbortController();
 
-        const searchNow = async () => {
-            if (inputsearch === "") {
-                setlistsearch([]);
-            }
-            else {
-                try{
-                    const res = await axios.post("/api/searchnithan",{value:inputsearch},{signal:abortcontroller.signal});
-                    if (res.status === 200) {
-                        setlistsearch(res.data);
-                    }
-                }
-                catch(err) {
-                    console.log(err);
-                }
-            }
-        }
+    //     const searchNow = async () => {
+    //         if (inputsearch === "") {
+    //             setlistsearch([]);
+    //         }
+    //         else {
+    //             try{
+    //                 const res = await axios.post("/api/searchnithan",{value:inputsearch},{signal:abortcontroller.signal});
+    //                 if (res.status === 200) {
+    //                     setlistsearch(res.data);
+    //                 }
+    //             }
+    //             catch(err) {
+    //                 console.log(err);
+    //             }
+    //         }
+    //     }
 
-        searchNow();
+    //     searchNow();
 
-        return () => abortcontroller.abort();
-    },[inputsearch]);
+    //     return () => abortcontroller.abort();
+    // },[inputsearch]);
 
     //!
 
@@ -126,7 +128,7 @@ export default function Header() {
                                 <p>Hello <span className="text-[#ff4550]">{verify?.name}</span></p>
                             </div>
                             :
-                            <Link href={"/login"} className="w-[100px] flex items-center justify-center gap-[10px] bg-[#ff4550] text-white h-[35px] rounded-[20px] p-[0_10px] ml-[20px] text-[16px] cursor-pointer">
+                            <Link href={"/signin"} className="w-[100px] flex items-center justify-center gap-[10px] bg-[#ff4550] text-white h-[35px] rounded-[20px] p-[0_10px] ml-[20px] text-[16px] cursor-pointer">
                                 {waitautosignin ? 
                                     <p className="aniwaitautosignin w-[20px] h-[20px] border-[3px] border-white rounded-[100%] border-r-transparent"></p>
                                     :
