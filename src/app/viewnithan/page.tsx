@@ -1,8 +1,11 @@
 "use client";
-import { useState,useEffect } from "react";
+import { useState,useEffect,useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import axios from "axios";
+import Cookies from "js-cookie";
+import Jwt from "jsonwebtoken";
 
 interface ContentType {
     content: string;
@@ -12,16 +15,28 @@ interface ContentType {
     createAt: Date;
 }
 
+interface TokenType {
+    exp:number;
+    gmail:string;
+    iat:number;
+    id:number;
+    name:string;
+}
+
 export default function Viewnithan() {
     const [content,setcontent] = useState<ContentType>();
     const [wait,setwait] = useState<boolean>(true);
+    const [islove,setislove] = useState<boolean>(false);
+    const [countfav,setcountfav] = useState<number>(0);
+    const abortcontrollerref = useRef<AbortController>(null);
     const searchparam = useSearchParams();
+    const router = useRouter();
+    const nithanid = searchparam.get("id");
 
     //!load data
 
     useEffect(() => {
         const abortcontroller = new AbortController();
-        const nithanid = searchparam.get("id");
 
         const loaddata = async () => {
             try{
@@ -29,8 +44,23 @@ export default function Viewnithan() {
                     setwait(true);
                     const res = await axios.get(`/api/getnithanuser?id=${nithanid}`,{signal:abortcontroller.signal});
                     if (res.status === 200) {
+                        const token = Cookies.get("token");
+
+                        if (token) {
+                            const decode:TokenType | null = Jwt.decode(token) as TokenType | null;
+                            const love = res.data.favorites.some((e:any) => decode?.id === e.userid);
+
+                            if (love) {
+                                setislove(true);
+                            }
+                            else {
+                                setislove(false);
+                            }
+                        }
+                       
                         setcontent(res.data);
                         setwait(false);
+                        setcountfav(res.data.favorites.length);
                     }
                 }
                 else {
@@ -49,6 +79,60 @@ export default function Viewnithan() {
 
     //!
 
+    //!love this nithan
+
+    const loveNithan = useCallback(async () => {
+        if (abortcontrollerref.current) {
+            abortcontrollerref.current.abort();
+        }
+        
+        abortcontrollerref.current = new AbortController();
+
+        try{
+            const token = Cookies.get("token");
+
+            if (token) {
+                if (!islove) {
+                    setislove(true);
+                    setcountfav((prev) => prev + 1);
+                }
+                else {
+                    setislove(false);
+                    setcountfav((prev) => prev - 1);
+                }
+
+                const res = await axios.get("/api/verifytoken",{signal:abortcontrollerref.current.signal});
+                if (res.status === 200) {
+                    if (res.data.token) {
+                        if (!islove) {
+                            const res2 = await axios.post("/api/lovenithan",{userid:res.data.id,nithanid:nithanid,islove:true});
+                            if (res2.status === 200) {
+                                setislove(true);
+                            }
+                        }
+                        else {
+                            const res3 = await axios.post("/api/lovenithan",{userid:res.data.id,nithanid:nithanid,islove:false});
+                            if (res3.status === 200) {
+                                setislove(false);
+                            }
+                        }
+                    }
+                    else {
+                        router.push("/signin");
+                    }
+                }
+            }
+            else {
+                router.push("/signin");
+            }
+        }
+        catch(err) {
+            console.log(err);
+        }
+    },[islove]);
+
+    //!
+
     return(
         <div className="overflow-y-scroll max-w-[1024px] h-[100%] m-[0_auto]">
             {/* <Header/> */}
@@ -57,6 +141,17 @@ export default function Viewnithan() {
                     <>
                     <h1 className="text-center font-bold text-[20px]">{content.title}</h1>
                     <div className="contentview pt-[50px]" dangerouslySetInnerHTML={{ __html: content.content  }} />
+                    {islove ? 
+                        <div onClick={() => loveNithan()} className="absolute right-[50px] bottom-[50px] flex flex-col items-center cursor-pointer text-[#ff4550]">
+                            <i className="fa-solid fa-heart text-[30px]"></i>
+                            <p>{countfav}</p>
+                        </div>
+                        :
+                        <div onClick={() => loveNithan()} className="absolute right-[50px] bottom-[50px] flex flex-col items-center cursor-pointer text-[#000]">
+                            <i className="fa-solid fa-heart text-[30px]"></i>
+                            <p>{countfav}</p>
+                        </div>
+                    }
                     </>
                     :
                     <h2 className="text-[40px] text-gray-300">Not Found :(</h2>

@@ -18,7 +18,7 @@ export async function GET(req:NextRequest) {
                 const finduser = await prisma.user.findUnique({where:{id:decoded.id}});
 
                 if (finduser) {
-                    return(NextResponse.json({token:true,name:finduser.name}));
+                    return(NextResponse.json({token:true,id:finduser.id,name:finduser.name}));
                 }
                 else {
                     return(NextResponse.json({token:false}));

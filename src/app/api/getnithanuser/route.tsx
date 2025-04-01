@@ -7,7 +7,7 @@ export async function GET(req:NextRequest) {
         const searchparam = req.nextUrl.searchParams;
         const id = searchparam.get("id");
 
-        const nithan = await prisma.nithan.findUnique({where:{id:Number(id)}});
+        const nithan = await prisma.nithan.findUnique({where:{id:Number(id)},include:{favorites:true}});
 
         return(NextResponse.json(nithan));
     }

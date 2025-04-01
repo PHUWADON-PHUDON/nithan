@@ -42,7 +42,7 @@ export default function Home() {
   //!
 
   return (
-    <div className="max-w-[1024px] h-[100%] m-[0_auto] flex flex-col">
+    <div className="max-w-[1024px] h-[90dvh] m-[0_auto] flex flex-col">
       {/* <Header/> */}
       {content.length > 0 ? 
         <div className="grow overflow-y-scroll p-[0_0_20px_0]">

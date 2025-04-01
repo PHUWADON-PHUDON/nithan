@@ -42,7 +42,6 @@ model user {
 
 model favorite {
   id Int @id @default(autoincrement())
-  fav Int
   userid Int
   user user @relation(fields: [userid], references: [id])
   nithanid Int
