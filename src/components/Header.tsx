@@ -50,6 +50,7 @@ export default function Header() {
                 if (res.status === 200) {
                   setverify(res.data);
                   setwaitautosignin(false);
+                  setisclickmenu(false);
                 }
             }
             catch(err) {
@@ -145,6 +146,7 @@ export default function Header() {
                         {verify?.token ? 
                             <div className="flex items-center h-[35px] p-[0_10px] ml-[20px] text-[16px]">
                                 <p>Hello <span className="text-[#ff4550]">{verify?.name}</span></p>
+                                <i onClick={() => logout()} className="fa-solid fa-right-from-bracket cursor-pointer ml-[20px] hover:text-[#ff4550]"></i>
                             </div>
                             :
                             <Link href={"/signin"} className="w-[100px] flex items-center justify-center gap-[10px] bg-[#ff4550] text-white h-[35px] rounded-[20px] p-[0_10px] ml-[20px] text-[16px] cursor-pointer">
