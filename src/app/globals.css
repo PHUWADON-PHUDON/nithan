@@ -73,9 +73,9 @@
     display: none;
 }
 
-@media screen and (max-width: 510px) {
+@media screen and (max-width: 559.90px) {
     .menuresponsive{
-        display: block;
+        display: flex;
     }
 
     .menu{

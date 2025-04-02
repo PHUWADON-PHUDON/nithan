@@ -5,6 +5,7 @@ import "./globals.css";
 import NextTopLoader from 'nextjs-toploader';
 import Header from "@/components/Header";
 import Userpovider from "@/components/Userpovider";
+import Darkmodeprovider from "@/components/Darkmodeprovider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,10 +39,12 @@ export default async function RootLayout({
       >
         <NextTopLoader showSpinner={false} color="#ff4550"/>
         <Suspense>
-          <Userpovider>
-            <Header/>
-            {children}
-          </Userpovider>
+          <Darkmodeprovider>
+            <Userpovider>
+              <Header/>
+              {children}
+            </Userpovider>
+          </Darkmodeprovider>
         </Suspense>
       </body>
     </html>

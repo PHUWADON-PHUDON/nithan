@@ -3,6 +3,7 @@ import { useState,useEffect,useContext } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { userpovider } from "./Userpovider";
+import { darkmodeprovider } from "./Darkmodeprovider";
 import Link from "next/link";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -38,6 +39,7 @@ export default function Header() {
     const router = useRouter();
     const pathname = usePathname();
     const userpovider_ = useContext(userpovider);
+    const darkmodeprovider_ = useContext(darkmodeprovider);
     const hideurl = ["/signin","/signup","/admin","/admin/managenithan","/admin/viewnithan","/admin/editnithan","/admin/createnithan"];
 
     //!verify
@@ -130,17 +132,25 @@ export default function Header() {
     }
 
     //!
+
+    //!click dark mode
+
+    const darkMode = () => {
+        darkmodeprovider_.setisdark((prev:boolean) => !prev);
+    }
+
+    //!
     
     return(
-        <div className="w-[100%] sticky top-0 z-10 bg-white @container">
+        <div style={darkmodeprovider_.isdark ? {backgroundColor:"#000",color:"#fff"}:{backgroundColor:"#fff",color:"#000"}} className="w-[100%] sticky top-0 z-10 @container">
             <div className="max-w-[1024px] h-[80px] m-[0_auto] relative">
                 <div className="h-[100%] flex items-center justify-between">
                     <div>
                         <h1 onClick={() => router.push("/")} className="font-bold text-[25px] cursor-pointer">Nithan</h1>
                     </div>
-                    <div className="flex @max-[470px]:hidden">
-                        <input type="" onChange={(e) => setinputsearch(e.target.value)} value={inputsearch} className="bg-[#0000000d] p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" placeholder="Search..."/>
-                        <div className="bg-[#0000000d] w-[35px] flex items-center justify-center rounded-[0_20px_20px_0]">
+                    <div className="flex @max-[520px]:hidden">
+                        <input type="" onChange={(e) => setinputsearch(e.target.value)} value={inputsearch} style={darkmodeprovider_.isdark ? {backgroundColor:"#2e2e2e"}:{backgroundColor:"#0000000d"}} className="p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" placeholder="Search..."/>
+                        <div style={darkmodeprovider_.isdark ? {backgroundColor:"#2e2e2e"}:{backgroundColor:"#0000000d"}} className="w-[35px] flex items-center justify-center rounded-[0_20px_20px_0]">
                             <i onClick={() => clickSearch()} className="fa-solid fa-magnifying-glass cursor-pointer hover:text-[#ff4550]"></i>
                         </div>
                         {verify?.token ? 
@@ -160,8 +170,18 @@ export default function Header() {
                                 }
                             </Link>
                         }
+                        <div className="flex items-center">
+                            <i onClick={() => darkMode()} className="fa-solid fa-moon cursor-pointer ml-[20px] hover:text-[#ff4550]"></i>
+                        </div>
                     </div>
-                    <div onClick={() => clickMenu()} className="menuresponsive">
+                    <div onClick={() => clickMenu()} className="menuresponsive items-center">
+                        {verify?.token ? 
+                            <div className="flex items-center h-[35px] p-[0_10px] ml-[20px] text-[16px]">
+                                <p>Hello <span className="text-[#ff4550]">{verify?.name}</span></p>
+                            </div>
+                            :
+                            <div></div>
+                        }
                         <i className="fa-solid fa-burger cursor-pointer hover:text-[#ff4550]"></i>
                     </div>
                 </div>
@@ -175,10 +195,10 @@ export default function Header() {
                     <p></p>
                 }
             </div>
-            <div style={isclickmenu ? {height:"auto",padding:"20px 0"}:{height:"0",padding:"0"}} className={`menu absolute w-[100%] overflow-hidden bg-white flex items-center justify-around flex-wrap gap-[20px]`}>
+            <div style={isclickmenu ? {height:"auto",padding:"20px 0"}:{height:"0",padding:"0"}} className={`menu bg-inherit absolute w-[100%] overflow-hidden flex items-center justify-around flex-wrap gap-[20px]`}>
                 <div className="flex">
-                    <input type="" onChange={(e) => setinputsearch(e.target.value)} value={inputsearch} className="bg-[#0000000d] p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" placeholder="Search..."/>
-                    <div className="bg-[#0000000d] w-[35px] flex items-center justify-center rounded-[0_20px_20px_0]">
+                    <input type="" onChange={(e) => setinputsearch(e.target.value)} value={inputsearch} style={darkmodeprovider_.isdark ? {backgroundColor:"#2e2e2e"}:{backgroundColor:"#0000000d"}} className="p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" placeholder="Search..."/>
+                    <div style={darkmodeprovider_.isdark ? {backgroundColor:"#2e2e2e"}:{backgroundColor:"#0000000d"}} className="w-[35px] flex items-center justify-center rounded-[0_20px_20px_0]">
                         <i onClick={() => clickSearch()} className="fa-solid fa-magnifying-glass cursor-pointer hover:text-[#ff4550]"></i>
                     </div>
                 </div>
@@ -188,7 +208,7 @@ export default function Header() {
                         <p>Logout</p>
                     </div>
                     :
-                    <Link href={"/signin"} className="w-[100px] flex items-center justify-center gap-[10px] bg-[#ff4550] text-white h-[35px] rounded-[20px] p-[0_10px] ml-[20px] text-[16px] cursor-pointer">
+                    <Link href={"/signin"} className="w-[100px] flex items-center justify-center gap-[10px] bg-[#ff4550] text-white h-[35px] rounded-[20px] p-[0_10px] text-[16px] cursor-pointer">
                         {waitautosignin ? 
                             <p className="aniwaitautosignin w-[20px] h-[20px] border-[3px] border-white rounded-[100%] border-r-transparent"></p>
                             :
@@ -199,6 +219,7 @@ export default function Header() {
                         }
                     </Link>
                 }
+                <i onClick={() => darkMode()} className="fa-solid fa-moon cursor-pointer hover:text-[#ff4550]"></i>
             </div>
         </div>
     );

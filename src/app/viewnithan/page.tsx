@@ -1,7 +1,8 @@
 "use client";
-import { useState,useEffect,useCallback, useRef } from "react";
+import {useState,useEffect,useCallback,useRef,useContext} from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { darkmodeprovider } from "@/components/Darkmodeprovider";
 import Header from "@/components/Header";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -31,6 +32,7 @@ export default function Viewnithan() {
     const abortcontrollerref = useRef<AbortController>(null);
     const searchparam = useSearchParams();
     const router = useRouter();
+    const darkmodeprovider_ = useContext(darkmodeprovider);
     const nithanid = searchparam.get("id");
 
     //!load data
@@ -134,7 +136,7 @@ export default function Viewnithan() {
     //!
 
     return(
-        <div className="overflow-y-scroll max-w-[1024px] h-[90dvh] m-[0_auto] p-[30px_0]">
+        <div style={darkmodeprovider_.isdark ? {color:"#fff"}:{color:"#000"}} className="overflow-y-scroll max-w-[1024px] h-[90dvh] m-[0_auto] p-[30px_0]">
             {/* <Header/> */}
             {!wait ? 
                 (content ? 
@@ -147,7 +149,7 @@ export default function Viewnithan() {
                             <p>{countfav}</p>
                         </div>
                         :
-                        <div onClick={() => loveNithan()} className="absolute right-[50px] bottom-[50px] flex flex-col items-center cursor-pointer text-[#000]">
+                        <div style={darkmodeprovider_.isdark ? {color:"#fff"}:{color:"#000"}} onClick={() => loveNithan()} className="absolute right-[50px] bottom-[50px] flex flex-col items-center cursor-pointer text-[#000]">
                             <i className="fa-solid fa-heart text-[30px]"></i>
                             <p>{countfav}</p>
                         </div>
