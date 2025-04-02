@@ -173,7 +173,7 @@ export default function Header() {
                     <p></p>
                 }
             </div>
-            <div className={`menu absolute w-[100%] overflow-hidden h-[${isclickmenu ? "auto":"0px"}] bg-white p-[${isclickmenu ? "20px_0":"0"}] flex items-center justify-around flex-wrap gap-[20px]`}>
+            <div style={isclickmenu ? {height:"auto",padding:"20px 0"}:{height:"0",padding:"0"}} className={`menu absolute w-[100%] overflow-hidden bg-white flex items-center justify-around flex-wrap gap-[20px]`}>
                 <div className="flex">
                     <input type="" onChange={(e) => setinputsearch(e.target.value)} value={inputsearch} className="bg-[#0000000d] p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" placeholder="Search..."/>
                     <div className="bg-[#0000000d] w-[35px] flex items-center justify-center rounded-[0_20px_20px_0]">
