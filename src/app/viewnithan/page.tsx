@@ -134,7 +134,7 @@ export default function Viewnithan() {
     //!
 
     return(
-        <div className="overflow-y-scroll max-w-[1024px] h-[100%] m-[0_auto]">
+        <div className="overflow-y-scroll max-w-[1024px] h-[90dvh] m-[0_auto] p-[30px_0]">
             {/* <Header/> */}
             {!wait ? 
                 (content ? 

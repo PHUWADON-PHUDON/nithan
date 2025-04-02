@@ -64,3 +64,21 @@
         transform: rotate(360deg);
     }
 }
+
+.menuresponsive{
+    display: none;
+}
+
+.menu{
+    display: none;
+}
+
+@media screen and (max-width: 510px) {
+    .menuresponsive{
+        display: block;
+    }
+
+    .menu{
+        display: flex;
+    }
+}
