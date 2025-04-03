@@ -108,15 +108,9 @@ export default function Viewnithan() {
                     if (res.data.token) {
                         if (!islove) {
                             const res2 = await axios.post("/api/lovenithan",{userid:res.data.id,nithanid:nithanid,islove:true});
-                            if (res2.status === 200) {
-                                setislove(true);
-                            }
                         }
                         else {
                             const res3 = await axios.post("/api/lovenithan",{userid:res.data.id,nithanid:nithanid,islove:false});
-                            if (res3.status === 200) {
-                                setislove(false);
-                            }
                         }
                     }
                     else {
