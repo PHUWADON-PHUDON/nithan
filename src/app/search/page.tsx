@@ -69,7 +69,7 @@ export default function Search() {
 
     return(
         <div style={darkmodeprovider_.isdark ? {backgroundColor:"#000",color:"#fff"}:{backgroundColor:"#fff",color:"#000"}} className="w-full h-full p-[0_20px]">
-            <div className="overflow-y-scroll max-w-[1024px] h-[100%] m-[0_auto]">
+            <div className="overflow-y-scroll max-w-[1024px] h-[90dvh] m-[0_auto]">
                 {/* <Header/> */}
                 {!wait ? 
                     (content.length > 0 ? 
@@ -77,7 +77,7 @@ export default function Search() {
                         <div className="max-w-[1024px] m-[0_auto] flex flex-wrap gap-[10px] justify-center">
                             {content.map((e,i) => (
                                 <Link key={i} href={`/viewnithan?id=${e.id}`} className="boxitem">
-                                    <div className="h-[180px] overflow-hidden rounded-2xl w-[240px] relative @max-[575px]:w-[350px] @max-[350px]:w-[250px]">
+                                    <div className="h-[180px] overflow-hidden rounded-2xl w-[240px] relative @max-[575px]:w-[100%] @max-[350px]:w-[250px]">
                                         {e.images.length > 0 ? 
                                           <img src={e.images[0].imageurl} alt="" className="object-cover h-[100%] w-[100%]" loading="lazy"/>
                                           :

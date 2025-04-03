@@ -65,7 +65,7 @@ export default function Home() {
                 {content.map((e:NiThanType,i:number) => (
                   (i > 0 ? 
                     <Link key={i} href={`/viewnithan?id=${e.id}`} className="boxitem">
-                      <div className="h-[180px] overflow-hidden rounded-2xl w-[250px] relative @max-[575px]:w-[350px] @max-[350px]:w-[250px]">
+                      <div className="h-[180px] overflow-hidden rounded-2xl w-[250px] relative @max-[575px]:w-[100%] @max-[350px]:w-[250px]">
                         {e.images.length > 0 ? 
                           <img src={e.images[0].imageurl} alt="" className="object-cover h-[100%] w-[100%]" loading="lazy"/>
                           :
