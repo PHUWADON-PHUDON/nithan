@@ -136,31 +136,33 @@ export default function Viewnithan() {
     //!
 
     return(
-        <div style={darkmodeprovider_.isdark ? {color:"#fff"}:{color:"#000"}} className="overflow-y-scroll max-w-[1024px] h-[90dvh] m-[0_auto] p-[30px_0]">
-            {/* <Header/> */}
-            {!wait ? 
-                (content ? 
-                    <>
-                    <h1 className="text-center font-bold text-[20px]">{content.title}</h1>
-                    <div className="contentview pt-[50px]" dangerouslySetInnerHTML={{ __html: content.content  }} />
-                    {islove ? 
-                        <div onClick={() => loveNithan()} className="absolute right-[50px] bottom-[50px] flex flex-col items-center cursor-pointer text-[#ff4550]">
-                            <i className="fa-solid fa-heart text-[30px]"></i>
-                            <p>{countfav}</p>
-                        </div>
+        <div style={darkmodeprovider_.isdark ? {backgroundColor:"#000",color:"#fff"}:{backgroundColor:"#fff",color:"#000"}} className="w-full h-full p-[0_20px]">
+            <div className="overflow-y-scroll max-w-[1024px] h-[90dvh] m-[0_auto] p-[30px_0]">
+                {/* <Header/> */}
+                {!wait ? 
+                    (content ? 
+                        <>
+                        <h1 className="text-center font-bold text-[20px]">{content.title}</h1>
+                        <div className="contentview pt-[50px]" dangerouslySetInnerHTML={{ __html: content.content  }} />
+                        {islove ? 
+                            <div onClick={() => loveNithan()} className="absolute right-[50px] bottom-[50px] flex flex-col items-center cursor-pointer text-[#ff4550]">
+                                <i className="fa-solid fa-heart text-[30px]"></i>
+                                <p>{countfav}</p>
+                            </div>
+                            :
+                            <div style={darkmodeprovider_.isdark ? {color:"#fff"}:{color:"#000"}} onClick={() => loveNithan()} className="absolute right-[50px] bottom-[50px] flex flex-col items-center cursor-pointer text-[#000]">
+                                <i className="fa-solid fa-heart text-[30px]"></i>
+                                <p>{countfav}</p>
+                            </div>
+                        }
+                        </>
                         :
-                        <div style={darkmodeprovider_.isdark ? {color:"#fff"}:{color:"#000"}} onClick={() => loveNithan()} className="absolute right-[50px] bottom-[50px] flex flex-col items-center cursor-pointer text-[#000]">
-                            <i className="fa-solid fa-heart text-[30px]"></i>
-                            <p>{countfav}</p>
-                        </div>
-                    }
-                    </>
+                        <h2 className="text-[40px] text-gray-300">Not Found :(</h2>
+                    )
                     :
-                    <h2 className="text-[40px] text-gray-300">Not Found :(</h2>
-                )
-                :
-                <p className="text-center">Loading...</p>
-            }
+                    <p className="text-center">Loading...</p>
+                }
+            </div>
         </div>
     );
 }

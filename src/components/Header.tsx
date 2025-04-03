@@ -142,7 +142,7 @@ export default function Header() {
     //!
     
     return(
-        <div style={darkmodeprovider_.isdark ? {backgroundColor:"#000",color:"#fff"}:{backgroundColor:"#fff",color:"#000"}} className="w-[100%] sticky top-0 z-10 @container">
+        <div style={darkmodeprovider_.isdark ? {backgroundColor:"#000",color:"#fff"}:{backgroundColor:"#fff",color:"#000"}} className="w-[100%] sticky top-0 z-10 p-[0_20px] @container">
             <div className="max-w-[1024px] h-[80px] m-[0_auto] relative">
                 <div className="h-[100%] flex items-center justify-between">
                     <div>
