@@ -1,11 +1,10 @@
 "use client";
 import { useState,useEffect,useContext } from "react";
-import { useSearchParams,useRouter } from "next/navigation";
 import { darkmodeprovider } from "@/components/Darkmodeprovider";
-import Header from "@/components/Header";
+import { useRouter,useSearchParams } from "next/navigation";
+import Link from "next/link";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
-import Link from "next/link";
 
 interface ImageType {
     id:number;
@@ -24,25 +23,23 @@ interface NiThanType {
   images:ImageType[];
 }
 
-export default function Search() {
-    const [countnithan,setcountnithan] = useState<number>(1);
+export default function Allnithan() {
     const [content,setcontent] = useState<NiThanType[]>([]);
     const [wait,setwait] = useState<boolean>(true);
-    const searchparam = useSearchParams();
-    const router = useRouter();
+    const [countnithan,setcountnithan] = useState<number>(0);
     const darkmodeprovider_ = useContext(darkmodeprovider);
+    const router = useRouter();
+    const searchparam = useSearchParams();
 
     //!load data
 
     useEffect(() => {
-        const abortcontroller = new AbortController();
-
         const loaddata = async () => {
             try{
                 setwait(true);
-                const res = await axios.get(`/api/searchnithan?search=${searchparam.get("search")}&page=${searchparam.get("page")}`,{signal:abortcontroller.signal});
+                const res = await axios.get(`/api/getnithan?page=${searchparam.get("page")}`);
                 if (res.status === 200) {
-                    setcountnithan(res.data.countnithan)
+                    setcountnithan(res.data.countnithan);
                     setcontent(res.data.nithan);
                     setwait(false);
                 }
@@ -53,16 +50,14 @@ export default function Search() {
         }
 
         loaddata();
-
-        return () => abortcontroller.abort();
-    },[searchparam]);
+    },[]);
 
     //!
 
-    //!chonge page
+    //!change page
 
-    const changePage = async (event:any) => {
-        router.push(`/search?search=${searchparam.get("search")}&page=${event.selected + 1}`);
+    const changePage = (event:any) => {
+        router.push(`/admin/managenithan?page=${event.selected + 1}`);
     }
 
     //!
@@ -70,7 +65,6 @@ export default function Search() {
     return(
         <div style={darkmodeprovider_.isdark ? {backgroundColor:"#000",color:"#fff"}:{backgroundColor:"#fff",color:"#000"}} className="w-full h-full p-[0_20px]">
             <div className="overflow-y-scroll max-w-[1024px] h-[90dvh] m-[0_auto]">
-                {/* <Header/> */}
                 {!wait ? 
                     (content.length > 0 ? 
                         <>
@@ -93,7 +87,7 @@ export default function Search() {
                                 previousLabel={false}
                                 nextLabel={false}
                                 breakLabel={'...'}
-                                pageCount={Math.ceil(countnithan / 12)}
+                                pageCount={Math.ceil(countnithan / 5)}
                                 marginPagesDisplayed={2}
                                 pageRangeDisplayed={5}
                                 onPageChange={changePage}
@@ -111,5 +105,5 @@ export default function Search() {
                 }
             </div>
         </div>
-    );
+    )
 }

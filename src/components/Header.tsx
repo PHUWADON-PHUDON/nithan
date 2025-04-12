@@ -145,8 +145,9 @@ export default function Header() {
         <div style={darkmodeprovider_.isdark ? {backgroundColor:"#000",color:"#fff"}:{backgroundColor:"#fff",color:"#000"}} className="w-[100%] sticky top-0 z-10 p-[0_20px] @container">
             <div className="max-w-[1024px] h-[80px] m-[0_auto] relative">
                 <div className="h-[100%] flex items-center justify-between">
-                    <div>
+                    <div className="flex items-center gap-[20px]">
                         <h1 onClick={() => router.push("/")} className="font-bold text-[25px] cursor-pointer">Nithan</h1>
+                        <Link href={"/allnithan?page=1"}>All</Link>
                     </div>
                     <div className="flex @max-[520px]:hidden">
                         <input type="" onChange={(e) => setinputsearch(e.target.value)} value={inputsearch} style={darkmodeprovider_.isdark ? {backgroundColor:"#2e2e2e"}:{backgroundColor:"#0000000d"}} className="p-[5px_10px] focus:outline-none rounded-[20px_0_0_20px] w-[200px] h-[35px]" placeholder="Search..."/>
