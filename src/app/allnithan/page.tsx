@@ -50,14 +50,14 @@ export default function Allnithan() {
         }
 
         loaddata();
-    },[]);
+    },[searchparam]);
 
     //!
 
     //!change page
 
     const changePage = (event:any) => {
-        router.push(`/admin/managenithan?page=${event.selected + 1}`);
+        router.push(`/allnithan?page=${event.selected + 1}`);
     }
 
     //!
@@ -84,6 +84,7 @@ export default function Allnithan() {
                         </div>
                         <div className="flex justify-center m-[50px_0]">
                             <ReactPaginate
+                                className={`pagination ${darkmodeprovider_.isdark ? "text-[#fff]":"text-[#000]"}`}
                                 previousLabel={false}
                                 nextLabel={false}
                                 breakLabel={'...'}
