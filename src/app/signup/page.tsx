@@ -90,7 +90,7 @@ export default function Signup() {
                             const res2 = await axios.get("/api/verifytoken");
                             if (res.status === 200) {
                                 userpovider_.setchecksignin((prev:boolean) => !prev);
-                                router.replace("/");
+                                router.push("/");
                                 setwaitsignup(false);
                             }
                         }
@@ -137,6 +137,7 @@ export default function Signup() {
                 </button>
                 <hr className="w-[80%] h-[1px] bg-[#f2f2f2] border-none mt-[10px]" />
                 <Link href={"/signin"} className="text-[15px]">or <span className="text-[#ff4550] underline">Sign In</span></Link>
+                <i onClick={() => router.push("/")} className="fa-solid fa-xmark absolute top-[-20px] right-[-20px] cursor-pointer"></i>
             </div>
         </div>
     );

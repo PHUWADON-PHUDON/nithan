@@ -45,7 +45,7 @@ export default function Login() {
                 if (res.status === 200) {
                     setchecksignin(true);
                     setwaitsignin(false);
-                    router.back();
+                    router.push("/");
                 }
             }
         }
@@ -77,6 +77,7 @@ export default function Login() {
                 </button>
                 <hr className="w-[80%] h-[1px] bg-[#f2f2f2] border-none mt-[10px]" />
                 <Link href={"/signup"} className="text-[15px]">or <span className="text-[#ff4550] underline">Sign Up</span></Link>
+                <i onClick={() => router.push("/")} className="fa-solid fa-xmark absolute top-[-20px] right-[-20px] cursor-pointer"></i>
             </div>
         </div>
     );
