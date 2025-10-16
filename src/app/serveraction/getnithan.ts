@@ -51,7 +51,7 @@ export async function getNithan(id:number) {
 
 export async function getNithanHome() {
     try{
-        const cached = cache.get(1);
+        const cached = cache.get(`a:{${1}}`);
         if (cached) return({status:200,nithan:cached});
 
         const nithan:NiThanType[] | null = await prisma.nithan.findMany({orderBy:{id:"desc"},include:{images:true},take:4}) as NiThanType[] | null;
@@ -66,7 +66,7 @@ export async function getNithanHome() {
             }));
         }
 
-        cache.set(1,nithan);
+        cache.set(`a:{${1}}`,nithan);
 
         return({status:200,nithan:nithan});
     }

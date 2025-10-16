@@ -9,12 +9,12 @@ export async function GET(req:NextRequest) {
         const searchparam = req.nextUrl.searchParams;
         const id = searchparam.get("id");
 
-        const cached = cache.get(id!);
+        const cached = cache.get(`b:{${id!}}`);
         if (cached) return NextResponse.json(cached);
 
         const nithan = await prisma.nithan.findUnique({where:{id:Number(id)},include:{favorites:true}});
 
-        cache.set(id!, nithan);
+        cache.set(`b:{${id!}}`, nithan);
 
         return(NextResponse.json(nithan));
     }

@@ -30,7 +30,7 @@ export async function GET(req:NextRequest) {
         const searchparam = req.nextUrl.searchParams;
         const page = searchparam.get("page") || 1;
 
-        const cached = cache.get(page);
+        const cached = cache.get(`c:{${page}}`);
         if (cached) return NextResponse.json(cached);
 
         const countnithan:number | null = await prisma.nithan.count() as number | null;
@@ -47,7 +47,7 @@ export async function GET(req:NextRequest) {
           }));
         }
 
-        cache.set(page,{nithan:nithan,countnithan:countnithan});
+        cache.set(`c:{${page}}`,{nithan:nithan,countnithan:countnithan});
 
         return(NextResponse.json({nithan:nithan,countnithan:countnithan}));
     }
