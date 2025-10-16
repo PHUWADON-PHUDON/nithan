@@ -44,15 +44,13 @@ export default function Viewnithan() {
             try{
                 if (!isNaN(Number(nithanid))) {
                     setwait(true);
-                    //const res = await axios.get(`/api/getnithanuser?id=${nithanid}`,{signal:abortcontroller.signal});
-                    const res = await fetch(`/api/getnithanuser?id=${nithanid}`,{next:{revalidate:3600}});
-                    const resdata = await res.json();
+                    const res = await axios.get(`/api/getnithanuser?id=${nithanid}`,{signal:abortcontroller.signal});
                     if (res.status === 200) {
                         const token = Cookies.get("token");
 
                         if (token) {
                             const decode:TokenType | null = Jwt.decode(token) as TokenType | null;
-                            const love = resdata.favorites.some((e:any) => decode?.id === e.userid);
+                            const love = res.data.favorites.some((e:any) => decode?.id === e.userid);
 
                             if (love) {
                                 setislove(true);
@@ -62,9 +60,9 @@ export default function Viewnithan() {
                             }
                         }
                        
-                        setcontent(resdata);
+                        setcontent(res.data);
                         setwait(false);
-                        setcountfav(resdata.favorites.length);
+                        setcountfav(res.data.favorites.length);
                     }
                 }
                 else {
