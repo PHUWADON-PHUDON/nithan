@@ -1,10 +1,12 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
 import { createClient } from "@supabase/supabase-js";
+import NodeCache from "node-cache";
 const supabaseUrl:string = process.env.SUPABASE_URL || "";
 const supabaseKey:string = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 const supabase = createClient(supabaseUrl,supabaseKey);
 const prisma = new PrismaClient();
+const cache = new NodeCache({ stdTTL: 3600 });
 
 interface ImageType {
     id:number;
@@ -49,6 +51,9 @@ export async function getNithan(id:number) {
 
 export async function getNithanHome() {
     try{
+        const cached = cache.get(1);
+        if (cached) return({status:200,nithan:cached});
+
         const nithan:NiThanType[] | null = await prisma.nithan.findMany({orderBy:{id:"desc"},include:{images:true},take:4}) as NiThanType[] | null;
 
         if (nithan) {
@@ -60,6 +65,8 @@ export async function getNithanHome() {
                 }
             }));
         }
+
+        cache.set(1,nithan);
 
         return({status:200,nithan:nithan});
     }

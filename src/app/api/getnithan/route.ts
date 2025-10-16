@@ -1,10 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest,NextResponse } from "next/server";
+import NodeCache from "node-cache";
 const supabaseUrl:string = process.env.SUPABASE_URL || "";
 const supabaseKey:string = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 const supabase = createClient(supabaseUrl,supabaseKey);
 const prisma = new PrismaClient();
+const cache = new NodeCache({ stdTTL: 3600 });
 
 interface ImageType {
     id:number;
@@ -28,6 +30,9 @@ export async function GET(req:NextRequest) {
         const searchparam = req.nextUrl.searchParams;
         const page = searchparam.get("page") || 1;
 
+        const cached = cache.get(page);
+        if (cached) return NextResponse.json(cached);
+
         const countnithan:number | null = await prisma.nithan.count() as number | null;
 
         const nithan:NiThanType[] | null = await prisma.nithan.findMany({include:{images:true},take:5,skip:Number(page) * 5 - 5,orderBy:{id:"desc"}}) as NiThanType[] | null;
@@ -41,6 +46,8 @@ export async function GET(req:NextRequest) {
             }
           }));
         }
+
+        cache.set(page,{nithan:nithan,countnithan:countnithan});
 
         return(NextResponse.json({nithan:nithan,countnithan:countnithan}));
     }

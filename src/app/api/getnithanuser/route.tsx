@@ -1,8 +1,8 @@
 import { NextRequest,NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import NodeCache from "node-cache"
+import NodeCache from "node-cache";
 const prisma = new PrismaClient();
-const cache = new NodeCache({ stdTTL: 3600 })
+const cache = new NodeCache({ stdTTL: 3600 });
 
 export async function GET(req:NextRequest) {
     try{
@@ -15,7 +15,7 @@ export async function GET(req:NextRequest) {
         const nithan = await prisma.nithan.findUnique({where:{id:Number(id)},include:{favorites:true}});
 
         cache.set(id!, nithan);
-        
+
         return(NextResponse.json(nithan));
     }
     catch(err) {
