@@ -1,11 +1,8 @@
 "use client";
 import { useState,useEffect,useContext } from "react";
 import { getNithanHome } from "./serveraction/getnithan";
-import { useSession } from "next-auth/react";
 import { darkmodeprovider } from "@/components/Darkmodeprovider";
-import Header from "@/components/Header";
 import Link from "next/link";
-import axios from "axios";
 
 interface ImageType {
   id:number;
